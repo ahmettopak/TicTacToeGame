@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:neon_widgets/neon_widgets.dart';
 import "package:tic_tac_toe/utils/game.dart";
 import "package:tic_tac_toe/utils/color.dart";
 import 'package:neon/neon.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,7 +32,7 @@ class _GameScreenState extends State<GameScreen> {
   String lastValue = "X";
   bool gameOver = false;
   int turn = 0; // to check the draw
-  String result = "";
+  String result = "Berabere";
   List<int> scoreboard = [
     0,
     0,
@@ -90,7 +92,7 @@ class _GameScreenState extends State<GameScreen> {
             height: boardWidth,
             child: GridView.count(
               crossAxisCount: Game.boardlenth ~/ 3,
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(8.0),
               mainAxisSpacing: 8.0,
               crossAxisSpacing: 8.0,
               children: List.generate(Game.boardlenth, (index) {
@@ -118,22 +120,33 @@ class _GameScreenState extends State<GameScreen> {
                             });
                           }
                         },
-                  child: Container(
+                  child: // Flickering neon container
+                      oNeonContainer(
+                    spreadColor: Colors.green.shade700,
                     width: Game.blocSize,
                     height: Game.blocSize,
-                    decoration: BoxDecoration(
-                      color: MainColor.secondaryColor,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   color: MainColor.secondaryColor,
+                    //   borderRadius: BorderRadius.circular(16.0),
+                    // ),
                     child: Center(
-                      child: Text(
-                        game.board![index],
-                        style: TextStyle(
-                          color: game.board![index] == "X"
-                              ? Colors.blue
-                              : Colors.pink,
-                          fontSize: 64.0,
-                        ),
+                      // Text(
+                      //   game.board![index],
+                      //   style: TextStyle(
+                      //     color: game.board![index] == "X"
+                      //         ? Colors.blue
+                      //         : Colors.pink,
+                      //     fontSize: 64.0,
+                      //   ),
+                      // ),
+                      child: oNeonText(
+                        text: game.board![index],
+                        spreadColor: Color.fromARGB(255, 255, 255, 255),
+                        blurRadius: 10,
+                        textSize: 60,
+                        textColor: game.board![index] == "X"
+                            ? Colors.blue
+                            : Colors.pink,
                       ),
                     ),
                   ),
@@ -141,51 +154,58 @@ class _GameScreenState extends State<GameScreen> {
               }),
             ),
           ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            result,
-            style: TextStyle(color: Colors.white, fontSize: 54.0),
-          ),
-          // ElevatedButton.icon(
-          //   onPressed: () {
-          //     setState(() {
-          //       //erase the board
-          //       game.board = Game.initGameBoard();
-          //       lastValue = "X";
-          //       gameOver = false;
-          //       turn = 0;
-          //       result = "";
-          //       scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
-          //     });
-          //   },
-          //   icon: Icon(Icons.replay),
-          //   label: Text("Yeniden Başla"),
+          // SizedBox(
+          //   height: 25,
           // ),
+          // Text(
+          //   result,
+          //   style: TextStyle(color: Colors.white, fontSize: 54.0),
+          // ),
+          // neon text
 
+          oNeonText(
+            text: result,
+            spreadColor: Colors.pink,
+            blurRadius: 20,
+            textSize: 20,
+            textColor: Colors.white,
+          ),
+
+          // Neon(text: result, color: Colors.blue, font: NeonFont.Membra),
+          // Neon(
+          //   text: result,
+          //   color: Colors.blue,
+          //   fontSize: 2,
+          //   font: NeonFont.Membra,
+          //   // flickeringText: true,
+          //   // flickeringLetters: [0, 1, 2, 3, 4],
+          //   // blurRadius: 10,
+          //   // glowing: true,
+          //   // glowingDuration: Duration(milliseconds: 10),
+          // ),
           TextButton(
-              onPressed: () {
-                setState(
-                  () {
-                    //erase the board
-                    game.board = Game.initGameBoard();
-                    lastValue = "X";
-                    gameOver = false;
-                    turn = 0;
-                    result = "";
-                    scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
-                  },
-                );
-              },
-              child: Neon(
-                text: 'Retro',
-                color: Colors.green,
-                fontSize: 50,
-                font: NeonFont.Membra,
-                flickeringText: true,
-                flickeringLetters: [0, 1, 2, 3, 4],
-              ))
+            onPressed: () {
+              setState(
+                () {
+                  //erase the board
+                  game.board = Game.initGameBoard();
+                  lastValue = "X";
+                  gameOver = false;
+                  turn = 0;
+                  result = "";
+                  scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
+                },
+              );
+            },
+            child: Neon(
+              text: "Yeniden Oyna",
+              color: Colors.cyan,
+              fontSize: 25,
+              font: NeonFont.Membra,
+              flickeringText: true,
+              // flickeringLetters: [0, 1, 2, 3, 4],
+            ),
+          ),
         ],
       ),
     );

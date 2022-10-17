@@ -3,7 +3,6 @@ import 'package:neon_widgets/neon_widgets.dart';
 import "package:tic_tac_toe/utils/game.dart";
 import "package:tic_tac_toe/utils/color.dart";
 import 'package:neon/neon.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,18 +31,8 @@ class _GameScreenState extends State<GameScreen> {
   String lastValue = "X";
   bool gameOver = false;
   int turn = 0; // to check the draw
-  String result = "Berabere";
-  List<int> scoreboard = [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-  ]; //the score are for the different combination of the game [Row1,2,3, Col1,2,3, Diagonal1,2];
-  //let's declare a new Game components
+  String result = "";
+  List<int> scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
 
   Game game = Game();
 
@@ -65,25 +54,23 @@ class _GameScreenState extends State<GameScreen> {
       ek = "da";
     }
 
+    String oyuncu = "Sıra ${lastValue} ${ek}".toUpperCase();
+    "";
+    if (result != "") {
+      oyuncu = result;
+    }
     return Scaffold(
-      backgroundColor: MainColor.primaryColor,
+      backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Neon(
-            text: "Sıra ${lastValue} ${ek}".toUpperCase(),
+            text: oyuncu,
             font: NeonFont.Membra,
             fontSize: 50,
             color: Colors.cyan,
           ),
-          // Text(
-          //   ,
-          //   style: TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 58,
-          //   ),
-          // ),
           SizedBox(
             height: 20.0,
           ),
@@ -120,33 +107,19 @@ class _GameScreenState extends State<GameScreen> {
                             });
                           }
                         },
-                  child: // Flickering neon container
-                      oNeonContainer(
-                    spreadColor: Colors.green.shade700,
+                  child: oNeonContainer(
+                    spreadColor: Colors.cyan.shade900,
                     width: Game.blocSize,
                     height: Game.blocSize,
-                    // decoration: BoxDecoration(
-                    //   color: MainColor.secondaryColor,
-                    //   borderRadius: BorderRadius.circular(16.0),
-                    // ),
                     child: Center(
-                      // Text(
-                      //   game.board![index],
-                      //   style: TextStyle(
-                      //     color: game.board![index] == "X"
-                      //         ? Colors.blue
-                      //         : Colors.pink,
-                      //     fontSize: 64.0,
-                      //   ),
-                      // ),
                       child: oNeonText(
                         text: game.board![index],
-                        spreadColor: Color.fromARGB(255, 255, 255, 255),
+                        spreadColor: Colors.white,
                         blurRadius: 10,
                         textSize: 60,
                         textColor: game.board![index] == "X"
-                            ? Colors.blue
-                            : Colors.pink,
+                            ? Colors.cyan
+                            : Colors.red,
                       ),
                     ),
                   ),
@@ -154,40 +127,10 @@ class _GameScreenState extends State<GameScreen> {
               }),
             ),
           ),
-          // SizedBox(
-          //   height: 25,
-          // ),
-          // Text(
-          //   result,
-          //   style: TextStyle(color: Colors.white, fontSize: 54.0),
-          // ),
-          // neon text
-
-          oNeonText(
-            text: result,
-            spreadColor: Colors.pink,
-            blurRadius: 20,
-            textSize: 20,
-            textColor: Colors.white,
-          ),
-
-          // Neon(text: result, color: Colors.blue, font: NeonFont.Membra),
-          // Neon(
-          //   text: result,
-          //   color: Colors.blue,
-          //   fontSize: 2,
-          //   font: NeonFont.Membra,
-          //   // flickeringText: true,
-          //   // flickeringLetters: [0, 1, 2, 3, 4],
-          //   // blurRadius: 10,
-          //   // glowing: true,
-          //   // glowingDuration: Duration(milliseconds: 10),
-          // ),
           TextButton(
             onPressed: () {
               setState(
                 () {
-                  //erase the board
                   game.board = Game.initGameBoard();
                   lastValue = "X";
                   gameOver = false;
@@ -197,18 +140,21 @@ class _GameScreenState extends State<GameScreen> {
                 },
               );
             },
-            child: Neon(
-              text: "Yeniden Oyna",
-              color: Colors.cyan,
-              fontSize: 25,
-              font: NeonFont.Membra,
-              flickeringText: true,
-              // flickeringLetters: [0, 1, 2, 3, 4],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Neon(
+                text: "Yeniden Başla",
+                color: Colors.cyan,
+                fontSize: 25,
+                font: NeonFont.Membra,
+                flickeringText: true,
+
+                // flickeringLetters: [0, 1, 2, 3, 4],
+              ),
             ),
           ),
         ],
       ),
     );
-    //the first step is organise our project folder structure
   }
 }

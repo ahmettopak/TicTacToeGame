@@ -30,7 +30,7 @@ class _GameScreenState extends State<GameScreen> {
   //adding the necessary variables
   String lastValue = "X";
   bool gameOver = false;
-  int turn = 0; // to check the draw
+  int turn = 0;
   String result = "";
   List<int> scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -127,21 +127,21 @@ class _GameScreenState extends State<GameScreen> {
               }),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              setState(
-                () {
-                  game.board = Game.initGameBoard();
-                  lastValue = "X";
-                  gameOver = false;
-                  turn = 0;
-                  result = "";
-                  scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
-                },
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 25),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: TextButton(
+              onPressed: () {
+                setState(
+                  () {
+                    game.board = Game.initGameBoard();
+                    lastValue = "X";
+                    gameOver = false;
+                    turn = 0;
+                    result = "";
+                    scoreboard = [0, 0, 0, 0, 0, 0, 0, 0];
+                  },
+                );
+              },
               child: Neon(
                 text: "Yeniden Başla",
                 color: Colors.cyan,
